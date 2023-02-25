@@ -5,7 +5,15 @@ PRETTIER=$(BIN)/prettier
 TSC=$(BIN)/tsc
 REMIX=$(BIN)/remix
 
-default: dist
+ifdef REMIX_APP
+	TARGET=public
+	export
+else
+	TARGET=dist
+	export
+endif
+
+default: $(TARGET)
 
 node_modules: package.json yarn.lock
 	yarn --frozen-lockfile
@@ -39,20 +47,20 @@ start-docker:
 stop-docker:
 	docker-compose stop
 
-remix-dev: node_modules
-	scripts/is-remix-app
-	make init-remix-app
+remix-dev: node_modules init-remix-app
 	$(REMIX) dev
 
-remix-build: node_modules
+public: node_modules
 	scripts/is-remix-app
 	make init-remix-app
 	$(REMIX) build
 
-
 dev: node_modules
-#	$(BIN)/wait-port 8682
-#	$(BIN)/nodemon
+	scripts/start-dev
+
+app-dev: node_modules start-docker
+	$(BIN)/wait-port 8682
+	$(BIN)/nodemon
 
 init-remix-app:
 	rm -rf public

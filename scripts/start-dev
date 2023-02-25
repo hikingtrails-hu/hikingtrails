@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+scripts/is-remix-app
+RESULT=$?
+
+[[ $RESULT == '2' ]] && exit 2
+
+if [[ $RESULT == '0' ]]
+then
+    make remix-dev
+else
+	make app-dev
+fi
