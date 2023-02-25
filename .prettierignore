@@ -1,0 +1,9 @@
+/node_modules
+/logs
+/dist
+/public
+/.netlify
+/tsconfig.dist.json
+
+*.yml
+*.md

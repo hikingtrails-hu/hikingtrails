@@ -1,6 +1,11 @@
 node_modules
 
 /.cache
-/public/build
 /.netlify
 .env
+
+/public
+
+/logs
+/dist
+/tsconfig.dist.json

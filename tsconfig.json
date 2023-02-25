@@ -1,22 +1,47 @@
 {
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
-  "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2019"],
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "jsx": "react-jsx",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "target": "ES2019",
-    "strict": true,
-    "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["./app/*"]
+    "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
+    "exclude": ["node_modules", "public"],
+    "ts-node": {
+        "transpileOnly": true,
+        "swc": true
     },
-
-    // Remix takes care of building everything in `remix build`.
-    "noEmit": true
-  }
+    "compilerOptions": {
+        "target": "es2022",
+        "lib": ["DOM", "DOM.Iterable", "ES2022"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "paths": {
+            "@/*": ["./src/*"],
+            "@test/*": ["./test/*"],
+            "@dev/*": ["./dev/*"]
+        },
+        "resolveJsonModule": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "outDir": "./dist",
+        "isolatedModules": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "useUnknownInCatchVariables": true,
+        "alwaysStrict": true,
+        "exactOptionalPropertyTypes": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedIndexedAccess": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "jsx": "react-jsx",
+        "allowJs": true,
+        "noEmit": true
+    }
 }

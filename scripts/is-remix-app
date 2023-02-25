@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+const { existsSync } = require('fs')
+
+const ENV_VAR = 'REMIX_APP'
+const appName = process.env[ENV_VAR]
+
+if (!appName) {
+    console.info(`${ENV_VAR} env var is not set – not building Remix app.`)
+    process.exit(1);
+}
+
+['routes', 'public'].forEach(dir => {
+    if (!existsSync(`./src/apps/${appName}/${dir}`)) {
+        console.error(`'${appName}' is not a remix app: ${dir} dir is missing.`)
+        process.exit(2);
+    }
+})

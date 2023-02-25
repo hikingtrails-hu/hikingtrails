@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+const tsConfig = require('../tsconfig.json')
+
+tsConfig.include = tsConfig.include
+    .filter(path => path.match(/^\*\*\//))
+    .map(path => `src/${path}`)
+
+tsConfig.compilerOptions.noEmit = false
+
+process.stdout.write(JSON.stringify(tsConfig, null, 4))
