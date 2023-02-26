@@ -2,7 +2,7 @@ import { describe, it, expect } from '@jest/globals'
 import { singleton } from '@/lib/setup/setup'
 
 describe('singleton()', () => {
-    it('return the same instance', () => {
+    it('returns the same instance', () => {
         const factory = singleton(() => ({
             test: 1,
         }))
