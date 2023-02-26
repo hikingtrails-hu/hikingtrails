@@ -1,11 +1,12 @@
-import { PubSub } from '@google-cloud/pubsub'
+import promiseRetry from 'promise-retry'
+import { pubsub, topic } from '@/lib/google-cloud/pubsub'
+import { subscription } from '@dev/lib/pubsub'
 
 const main = async () => {
-    const pubsub = new PubSub({ projectId: 'test-project' })
-    const subscription = pubsub.subscription('test-subscription')
-    subscription.on('message', (message) => {
+    subscription().on('message', (message) => {
         console.log(message)
     })
+    console.info('🌈 Development worker started')
 }
 
 void main()

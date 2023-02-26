@@ -1,16 +1,20 @@
-.PHONY: dev test depcheck format-code lint verify dev
+.PHONY: dev test depcheck format-code lint verify dev init-remix-app app-dev remix-dev init
+
+ifneq (,$(wildcard ./.env))
+    include .env
+    export
+endif
 
 BIN=node_modules/.bin
 PRETTIER=$(BIN)/prettier
 TSC=$(BIN)/tsc
 REMIX=$(BIN)/remix
+TSNODE=$(BIN)/ts-node -r tsconfig-paths/register
 
 ifdef REMIX_APP
 	TARGET=public
-	export
 else
 	TARGET=dist
-	export
 endif
 
 default: $(TARGET)
@@ -59,9 +63,20 @@ dev: node_modules
 	scripts/start-dev
 
 app-dev: node_modules start-docker
-	$(BIN)/wait-port 8682
+	$(TSNODE) dev/ensure-pubsub-setup.ts
 	$(BIN)/nodemon
 
 init-remix-app:
 	rm -rf public
 	cp -R src/apps/${REMIX_APP}/public .
+
+.env: .env.development
+	cp .env.development .env
+
+init: .env node_modules
+
+trigger-load-request: node_modules
+	$(TSNODE) dev/trigger-load-request.ts
+
+reset-pubsub: node_modules
+	$(TSNODE) dev/reset-pubsub.ts

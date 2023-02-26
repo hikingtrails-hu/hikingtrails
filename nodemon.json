@@ -1,5 +1,6 @@
 {
     "watch": ["dev", "src"],
+    "ignore": [],
     "ext": "ts,json",
-    "exec": "ts-node -r tsconfig-paths/register dev/start.ts"
+    "exec": "$TSNODE dev/start.ts"
 }

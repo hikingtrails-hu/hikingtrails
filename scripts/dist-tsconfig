@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const { readdirSync, existsSync } = require('fs')
+
 const tsConfig = require('../tsconfig.json')
 
 tsConfig.include = tsConfig.include
@@ -7,5 +9,13 @@ tsConfig.include = tsConfig.include
     .map(path => `src/${path}`)
 
 tsConfig.compilerOptions.noEmit = false
+
+const excludeRemixDirs = readdirSync('src/apps/').filter(appDir =>
+    existsSync(`src/apps/${appDir}/public`) &&
+    existsSync(`src/apps/${appDir}/routes`) &&
+    existsSync(`src/apps/${appDir}/root.tsx`)
+).map(appDir => `src/apps/${appDir}`)
+
+tsConfig.exclude = tsConfig.exclude.concat(excludeRemixDirs)
 
 process.stdout.write(JSON.stringify(tsConfig, null, 4))

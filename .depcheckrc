@@ -12,3 +12,5 @@ ignores:
   - 'tsconfig-paths'
   - 'wait-port'
   - '@google-cloud/functions-framework'
+# Don't alert on false positives:
+  - '@dev/lib'

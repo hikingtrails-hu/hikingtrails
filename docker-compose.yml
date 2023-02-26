@@ -7,9 +7,6 @@ services:
       - ./data:/data
     command: [ "-scheme", "http", "-port", "5100", "-external-url", "http://localhost:5100", "-backend", "memory" ]
   pubsub:
-    image: thekevjames/gcloud-pubsub-emulator:latest
+    image: getalma/gcp-pubsub-emulator:latest
     ports:
-      - 8681:8681
-      - 8682:8682
-    environment:
-      PUBSUB_PROJECT: 'test-project,test-topic:test-subscription'
+      - 5110:8085
