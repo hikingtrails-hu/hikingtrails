@@ -62,8 +62,7 @@ public: node_modules
 dev: node_modules
 	scripts/start-dev
 
-app-dev: node_modules start-docker
-	$(TSNODE) dev/ensure-pubsub-setup.ts
+app-dev: ensure-pubsub-setup
 	$(BIN)/nodemon
 
 init-remix-app:
@@ -75,8 +74,11 @@ init-remix-app:
 
 init: .env node_modules
 
-trigger-load-request: node_modules
+trigger-load-request: ensure-pubsub-setup
 	$(TSNODE) dev/trigger-load-request.ts
 
-reset-pubsub: node_modules
+reset-pubsub: ensure-pubsub-setup
 	$(TSNODE) dev/reset-pubsub.ts
+
+ensure-pubsub-setup: node_modules start-docker
+	$(TSNODE) dev/ensure-pubsub-setup.ts

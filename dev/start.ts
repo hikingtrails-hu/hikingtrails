@@ -4,7 +4,7 @@ import { subscription } from '@dev/lib/pubsub'
 
 const main = async () => {
     subscription().on('message', (message) => {
-        console.log(message)
+        console.log(message.data.toString('utf8'))
     })
     console.info('🌈 Development worker started')
 }

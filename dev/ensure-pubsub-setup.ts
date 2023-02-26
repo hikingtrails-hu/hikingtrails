@@ -6,7 +6,7 @@ const main = async () => {
     await promiseRetry(
         async (retry, attempt) => {
             try {
-                console.info(`* Checking Pub/Sub emulator…`)
+                console.info(`* Checking Pub/Sub emulator… (${attempt})`)
                 await pubsub().getTopics({ gaxOpts: { timeout: 1000 } })
                 console.info(`✓ Pub/Sub emulator is ready`)
             } catch (err) {
@@ -17,7 +17,6 @@ const main = async () => {
             factor: 1,
             retries: 100,
             minTimeout: 500,
-            maxTimeout: 1500,
         }
     )
     const [topicExists] = await topic().exists()
