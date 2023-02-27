@@ -11,13 +11,7 @@ TSC=$(BIN)/tsc
 REMIX=$(BIN)/remix
 TSNODE=$(BIN)/ts-node -r tsconfig-paths/register
 
-ifdef REMIX_APP
-	TARGET=public
-else
-	TARGET=dist
-endif
-
-default: $(TARGET)
+default: dist dist-remix/admin
 
 node_modules: package.json yarn.lock
 	yarn --frozen-lockfile
@@ -38,8 +32,10 @@ verify: depcheck lint check-types test
 test: node_modules
 	$(BIN)/jest --coverage
 
-dist: node_modules
+tsconfig.dist.json: node_modules src
 	scripts/dist-tsconfig > tsconfig.dist.json
+
+dist: node_modules tsconfig.dist.json
 	$(TSC) -p ./tsconfig.dist.json --pretty
 	scripts/resolve-imports
 
@@ -55,10 +51,10 @@ stop-docker:
 remix-dev: node_modules init-remix-app
 	$(REMIX) dev
 
-public: node_modules
+remix-build: node_modules
 	scripts/is-remix-app
 	make init-remix-app
-	$(REMIX) build
+	NODE_ENV=production $(REMIX) build
 
 dev: node_modules
 	scripts/start-dev
@@ -67,7 +63,7 @@ app-dev: ensure-pubsub-setup
 	$(BIN)/nodemon
 
 init-remix-app:
-	rm -rf public
+	rm -rf public .cache .netlify
 	cp -R src/apps/${REMIX_APP}/public .
 
 .env: .env.development
@@ -83,3 +79,11 @@ reset-pubsub: ensure-pubsub-setup
 
 ensure-pubsub-setup: node_modules start-docker
 	$(TSNODE) dev/ensure-pubsub-setup.ts
+
+dist-remix/admin: node_modules src
+	REMIX_APP=admin make remix-build
+	rm -rf dist-remix/admin
+	mkdir -p dist-remix/admin
+	mv .cache dist-remix/admin
+	mv .netlify dist-remix/admin
+	mv public dist-remix/admin
