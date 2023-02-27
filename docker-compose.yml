@@ -1,6 +1,6 @@
 services:
   storage:
-    image: fsouza/fake-gcs-worker:latest
+    image: fsouza/fake-gcs-server:latest
     ports:
       - 5100:5100
     volumes:
