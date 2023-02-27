@@ -10,6 +10,9 @@ tsConfig.include = tsConfig.include
 
 tsConfig.compilerOptions.noEmit = false
 
+tsConfig.compilerOptions.lib = tsConfig.compilerOptions.lib
+    .filter(lib => !lib.match(/^DOM/))
+
 const excludeRemixDirs = readdirSync('src/apps/').filter(appDir =>
     existsSync(`src/apps/${appDir}/public`) &&
     existsSync(`src/apps/${appDir}/routes`) &&

@@ -3,9 +3,9 @@ module.exports = {
     ignoredRouteFiles: ['**/.*'],
     server:
         process.env.NETLIFY || process.env.NETLIFY_LOCAL
-            ? './server.js'
+            ? './worker.js'
             : undefined,
-    serverBuildPath: '.netlify/functions-internal/server.js',
+    serverBuildPath: '.netlify/functions-internal/worker.js',
     appDirectory: `src/apps/${process.env.REMIX_APP}`,
     // assetsBuildDirectory: "public/build",
     // publicPath: "/build/",

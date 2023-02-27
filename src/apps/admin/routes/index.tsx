@@ -1,4 +1,4 @@
-import { server } from '@/apps/server/server'
+import { server } from '@/apps/worker/server'
 
 export default function Index() {
     return (
