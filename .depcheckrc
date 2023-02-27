@@ -9,7 +9,6 @@ ignores:
   - 'ts-jest'
   - 'ts-node'
   - 'typescript'
-  - 'tsconfig-paths'
   - 'wait-port'
   - '@google-cloud/functions-framework'
   - 'glob'

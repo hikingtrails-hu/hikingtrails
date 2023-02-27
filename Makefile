@@ -9,7 +9,7 @@ BIN=node_modules/.bin
 PRETTIER=$(BIN)/prettier
 TSC=$(BIN)/tsc
 REMIX=$(BIN)/remix
-TSNODE=$(BIN)/ts-node -r tsconfig-paths/register
+TSNODE=$(BIN)/ts-node -r alias-hq/init
 
 default: dist dist-remix/admin
 
