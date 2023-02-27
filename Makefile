@@ -41,6 +41,7 @@ test: node_modules
 dist: node_modules
 	scripts/dist-tsconfig > tsconfig.dist.json
 	$(TSC) -p ./tsconfig.dist.json --pretty
+	scripts/resolve-imports
 
 check-types: node_modules
 	$(TSC) -p . --noEmit

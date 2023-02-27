@@ -13,7 +13,8 @@
         "paths": {
             "@/*": ["./src/*"],
             "@test/*": ["./test/*"],
-            "@dev/*": ["./dev/*"]
+            "@dev/*": ["./dev/*"],
+            "@dist/*": ["./dist/*"]
         },
         "resolveJsonModule": true,
         "declaration": true,
