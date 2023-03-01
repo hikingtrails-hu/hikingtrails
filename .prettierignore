@@ -1,9 +1,14 @@
 /node_modules
+
+/.cache
+/.netlify
+.env
+
+/public
+
 /logs
 /dist
 /dist-remix
-/public
-/.netlify
 /tsconfig.dist.json
 
 *.yml

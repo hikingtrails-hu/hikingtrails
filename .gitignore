@@ -8,5 +8,5 @@ node_modules
 
 /logs
 /dist
-/tsconfig.dist.json
 /dist-remix
+/tsconfig.dist.json
