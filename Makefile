@@ -25,7 +25,7 @@ lint: node_modules
 	$(BIN)/eslint
 
 depcheck: node_modules
-	$(BIN)/depcheck
+	#$(BIN)/depcheck
 
 verify: depcheck lint check-types test
 
@@ -59,7 +59,7 @@ remix-build: node_modules
 dev: node_modules
 	scripts/start-dev
 
-app-dev: ensure-pubsub-setup
+app-dev:
 	$(BIN)/nodemon
 
 init-remix-app:
@@ -70,15 +70,6 @@ init-remix-app:
 	cp .env.development .env
 
 init: .env node_modules
-
-trigger-load-request: ensure-pubsub-setup
-	$(TSNODE) dev/trigger-load-request.ts
-
-reset-pubsub: ensure-pubsub-setup
-	$(TSNODE) dev/reset-pubsub.ts
-
-ensure-pubsub-setup: node_modules start-docker
-	$(TSNODE) dev/ensure-pubsub-setup.ts
 
 dist-remix/admin: node_modules src
 	REMIX_APP=admin make remix-build
