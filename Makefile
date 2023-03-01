@@ -11,7 +11,7 @@ TSC=$(BIN)/tsc
 REMIX=$(BIN)/remix
 TSNODE=$(BIN)/ts-node -r alias-hq/init
 
-default: dist dist-remix/admin
+default: dist #dist-remix/admin
 
 node_modules: package.json yarn.lock
 	yarn --frozen-lockfile

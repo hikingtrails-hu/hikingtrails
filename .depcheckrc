@@ -10,7 +10,6 @@ ignores:
   - 'ts-node'
   - 'typescript'
   - 'wait-port'
-  - '@google-cloud/functions-framework'
   - 'glob'
 # Don't alert on false positives:
   - '@dev/lib'

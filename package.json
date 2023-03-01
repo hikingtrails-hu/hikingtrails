@@ -1,6 +1,7 @@
 {
     "private": true,
     "sideEffects": false,
+    "main": "index.js",
     "engines": {
         "node": ">=18"
     },
@@ -20,7 +21,8 @@
         "alias-hq": "^6.1.0",
         "cross-env": "^7.0.3",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "react-dom": "^18.2.0",
+        "secure-json-parse": "^2.7.0"
     },
     "devDependencies": {
         "@jest/globals": "^29.4.3",

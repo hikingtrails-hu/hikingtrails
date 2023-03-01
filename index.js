@@ -1,5 +1,5 @@
 require('alias-hq').get('module-alias')
 
-const { server } = require('./dist/apps/worker/server')
+const { main } = require('./dist/apps/worker/main')
 
-console.log({ server: server() })
+main()
