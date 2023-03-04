@@ -11,5 +11,6 @@ ignores:
   - 'typescript'
   - 'wait-port'
   - 'glob'
+  - 'express'
 # Don't alert on false positives:
   - '@dev/lib'

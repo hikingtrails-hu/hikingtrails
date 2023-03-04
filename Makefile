@@ -25,7 +25,7 @@ lint: node_modules
 	$(BIN)/eslint
 
 depcheck: node_modules
-	#$(BIN)/depcheck
+	$(BIN)/depcheck
 
 verify: depcheck lint check-types test
 
