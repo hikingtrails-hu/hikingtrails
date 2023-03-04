@@ -80,4 +80,4 @@ dist-remix/admin: node_modules src
 	mv public dist-remix/admin
 
 tsnode: node_modules
-	node_modules/.bin/ts-node -r alias-hq/init
+	$(TSNODE)
