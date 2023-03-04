@@ -9,6 +9,7 @@ import { pointsFromGpx, locationsFromGpx } from '@/apps/worker/xml/xml'
 import { config } from '@/apps/worker/config/config'
 import { generatePath } from '@/apps/worker/map/map'
 import { findByPattern, getLinkUrlsFromHtml } from '@/apps/worker/html/html'
+import { storage } from '@/apps/worker/storage/storage'
 
 export const BLUE_TRAIL_DATA_LOAD_REQUEST = 'BlueTrailDataLoadRequest'
 
@@ -39,5 +40,6 @@ export const run = async () => {
             points,
             locations: locationsData,
         })
+        await storage.set(`trails/current/${key}.json`, path)
     }
 }

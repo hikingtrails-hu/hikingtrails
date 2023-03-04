@@ -1,4 +1,4 @@
-.PHONY: dev test depcheck format-code lint verify dev init-remix-app app-dev remix-dev init
+.PHONY: dev test depcheck format-code lint verify dev init-remix-app app-dev remix-dev init tsnode
 
 ifneq (,$(wildcard ./.env))
     include .env
@@ -56,7 +56,7 @@ remix-build: node_modules
 	make init-remix-app
 	NODE_ENV=production $(REMIX) build
 
-dev: node_modules
+dev: node_modules start-docker
 	scripts/start-dev
 
 app-dev:
@@ -78,3 +78,6 @@ dist-remix/admin: node_modules src
 	mv .cache dist-remix/admin
 	mv .netlify dist-remix/admin
 	mv public dist-remix/admin
+
+tsnode: node_modules
+	node_modules/.bin/ts-node -r alias-hq/init
