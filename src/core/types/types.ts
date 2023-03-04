@@ -23,7 +23,7 @@ export type HasDeltaFromPrevious = {
 
 export type Path = {
     nodes: PathNode[]
-    locations: LocationOnPath[]
+    checkpoints: CheckPointOnPath[]
 }
 
 export type Location = {
@@ -42,3 +42,15 @@ export type TrailData = {
 export type OnPath = {
     nodeIdx: number
 }
+
+export type CheckPoint = {
+    locations: MeasuredLocationOnPath[]
+}
+
+export type CheckPointOnPath = OnPath & CheckPoint
+
+export type Measured = {
+    distance: number
+}
+
+export type MeasuredLocationOnPath = Measured & LocationOnPath

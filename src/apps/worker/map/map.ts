@@ -5,7 +5,12 @@ import {
     Point,
     LatLon,
     LocationOnPath,
+    CheckPoint,
+    Measured,
+    MeasuredLocationOnPath,
+    CheckPointOnPath,
 } from '@/core/types/types'
+import { strict as assert } from 'assert'
 import { getPreciseDistance } from 'geolib'
 
 export const getDistance = (point1: LatLon, point2: LatLon) =>
@@ -33,6 +38,7 @@ export const generatePath = (trail: TrailData): Path => {
                 ? { distance: 0, descent: 0, rise: 0 }
                 : getDelta(trail.points[idx - 1] as Point, point),
     }))
+    assert(trail.locations.length > 0)
     const locations = trail.locations
         .map((location) => {
             let minDistance = Infinity
@@ -50,8 +56,51 @@ export const generatePath = (trail: TrailData): Path => {
             }
         })
         .sort((location1, location2) => location1.nodeIdx - location2.nodeIdx)
+    const measuredLocations: MeasuredLocationOnPath[] = locations.map(
+        (location, idx) => ({
+            ...location,
+            distance:
+                idx === 0
+                    ? 0
+                    : nodes
+                          .slice(
+                              (locations[idx - 1] as LocationOnPath).nodeIdx +
+                                  1,
+                              location.nodeIdx + 1
+                          )
+                          .map((node) => node.delta.distance)
+                          .reduce((prev, curr) => prev + curr, 0),
+        })
+    )
+    const checkpoints: CheckPoint[] = [
+        { locations: [measuredLocations[0] as MeasuredLocationOnPath] },
+    ]
+    for (let i = 1; i < measuredLocations.length; ++i) {
+        const current = measuredLocations[i] as MeasuredLocationOnPath
+        const lastCheckpoint = checkpoints[checkpoints.length - 1] as CheckPoint
+        const last = lastCheckpoint.locations[
+            lastCheckpoint.locations.length - 1
+        ] as MeasuredLocationOnPath
+        if (current.distance > 1500 || current.name !== last.name) {
+            checkpoints.push({
+                locations: [current],
+            })
+        } else {
+            lastCheckpoint.locations.push(current)
+        }
+    }
+    const checkpointOnPaths: CheckPointOnPath[] = checkpoints.map(
+        (checkpoint) => ({
+            ...checkpoint,
+            nodeIdx: (
+                checkpoint.locations[
+                    Math.floor(checkpoint.locations.length / 2)
+                ] as MeasuredLocationOnPath
+            ).nodeIdx,
+        })
+    )
     return {
         nodes,
-        locations,
+        checkpoints: checkpointOnPaths,
     }
 }

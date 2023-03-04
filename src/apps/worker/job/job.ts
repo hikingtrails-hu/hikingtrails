@@ -17,7 +17,9 @@ export const run = async () => {
         format(new Date(), 'yyyy-MM-dd-HH-mm-ss'),
         uuid(),
     ].join('_')
+    console.log(loadRequestId)
     for (const key of blueTrailKeys) {
+        // for (const key of ['okt']) {
         const trailSetup = blueTrailSetup[key]
         const trailPageBody = await http.get(trailSetup.dataHomepageUrl)
         const links = getLinkUrlsFromHtml(trailPageBody)
@@ -37,6 +39,5 @@ export const run = async () => {
             points,
             locations: locationsData,
         })
-        console.log(path.locations.map((loc) => [loc.name, loc.nodeIdx]))
     }
 }
