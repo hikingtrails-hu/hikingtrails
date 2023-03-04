@@ -30,13 +30,13 @@ export const run = async () => {
         const points = allPoints.filter(
             (_, idx) => idx % config.keepEveryNthPathNode === 0
         )
-        const locations = allLocations.filter(
+        const locationsData = allLocations.filter(
             (_, idx) => idx % config.keepEveryNthLocation === 0
         )
         const path = generatePath({
             points,
-            locations,
+            locations: locationsData,
         })
-        console.log(path.nodes.length)
+        console.log(path.locations.map((loc) => [loc.name, loc.nodeIdx]))
     }
 }
