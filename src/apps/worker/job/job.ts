@@ -4,7 +4,7 @@ import {
 } from '@/apps/worker/hbt/blue-trail-setup'
 import format from 'date-fns/format'
 import { uuid } from '@/apps/worker/uuid/uuid'
-import { httpGet } from '@/apps/worker/http/http'
+import { http } from '@/apps/worker/http/http'
 import { pointsFromGpx, locationsFromGpx } from '@/apps/worker/xml/xml'
 import { config } from '@/apps/worker/config/config'
 import { generatePath } from '@/apps/worker/map/map'
@@ -19,13 +19,13 @@ export const run = async () => {
     ].join('_')
     for (const key of blueTrailKeys) {
         const trailSetup = blueTrailSetup[key]
-        const trailPageBody = await httpGet(trailSetup.dataHomepageUrl)
+        const trailPageBody = await http.get(trailSetup.dataHomepageUrl)
         const links = getLinkUrlsFromHtml(trailPageBody)
         const pathGpxUrl = findByPattern(links, trailSetup.pathGpxUrlPattern)
         const stampGpxUrl = findByPattern(links, trailSetup.stampGpxUrlPattern)
         const [allPoints, allLocations] = await Promise.all([
-            httpGet(pathGpxUrl).then(pointsFromGpx),
-            httpGet(stampGpxUrl).then(locationsFromGpx),
+            http.get(pathGpxUrl).then(pointsFromGpx),
+            http.get(stampGpxUrl).then(locationsFromGpx),
         ])
         const points = allPoints.filter(
             (_, idx) => idx % config.keepEveryNthPathNode === 0
