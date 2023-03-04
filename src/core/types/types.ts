@@ -44,6 +44,7 @@ export type OnPath = {
 }
 
 export type CheckPoint = {
+    name: string
     locations: MeasuredLocationOnPath[]
 }
 

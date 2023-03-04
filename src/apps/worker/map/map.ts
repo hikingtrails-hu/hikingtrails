@@ -73,7 +73,10 @@ export const generatePath = (trail: TrailData): Path => {
         })
     )
     const checkpoints: CheckPoint[] = [
-        { locations: [measuredLocations[0] as MeasuredLocationOnPath] },
+        {
+            locations: [measuredLocations[0] as MeasuredLocationOnPath],
+            name: (measuredLocations[0] as MeasuredLocationOnPath).name,
+        },
     ]
     for (let i = 1; i < measuredLocations.length; ++i) {
         const current = measuredLocations[i] as MeasuredLocationOnPath
@@ -84,6 +87,7 @@ export const generatePath = (trail: TrailData): Path => {
         if (current.distance > 1500 || current.name !== last.name) {
             checkpoints.push({
                 locations: [current],
+                name: current.name,
             })
         } else {
             lastCheckpoint.locations.push(current)
