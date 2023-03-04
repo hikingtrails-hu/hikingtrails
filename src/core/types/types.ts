@@ -55,3 +55,9 @@ export type Measured = {
 }
 
 export type MeasuredLocationOnPath = Measured & LocationOnPath
+
+export type Trail = {
+    path: Path
+    name: string
+    id: string
+}

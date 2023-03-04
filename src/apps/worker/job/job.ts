@@ -10,6 +10,7 @@ import { config } from '@/apps/worker/config/config'
 import { generatePath } from '@/apps/worker/map/map'
 import { findByPattern, getLinkUrlsFromHtml } from '@/apps/worker/html/html'
 import { storage } from '@/apps/worker/storage/storage'
+import { Trail } from '@/core/types/types'
 
 export const BLUE_TRAIL_DATA_LOAD_REQUEST = 'BlueTrailDataLoadRequest'
 
@@ -40,6 +41,11 @@ export const run = async () => {
             points,
             locations: locationsData,
         })
-        await storage.set(`trails/current/${key}.json`, path)
+        const trail: Trail = {
+            path,
+            name: trailSetup.name,
+            id: key,
+        }
+        await storage.set(`trails/current/${key}.json`, trail)
     }
 }
